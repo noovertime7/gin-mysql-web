@@ -59,11 +59,11 @@
       <el-table-column label="备份任务状态" align="center" min-width="100px">
         <template slot-scope="{ row }">
           <el-switch
-            v-model="row.Status"
+            v-model="row.status"
             active-color="#13ce66"
             inactive-color="#ff4949"
-            @change="handleDelete">
-          </el-switch>
+            disabled
+          />
         </template>
       </el-table-column>
       <el-table-column label="任务创建时间" align="center" min-width="100px">
@@ -78,7 +78,7 @@
         class-name="small-padding fixed-width"
       >
         <template slot-scope="{ row, $index }">
-          <el-button type="primary" size="mini"> 启动 </el-button>
+          <el-button type="primary" size="mini" @click="handleStartBakTask(row,$index)"> 启动 </el-button>
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             修改
           </el-button>
@@ -105,30 +105,14 @@
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import { taskList, taskDelete } from '@/api/task'
-
-const loadTypeOptions = [
-  { key: '0', display_name: 'HTTP' },
-  { key: '1', display_name: 'TCP' },
-  { key: '2', display_name: 'GRPC' }
-]
-
-const loadTypeKeyValue = loadTypeOptions.reduce((acc, cur) => {
-  acc[cur.key] = cur.display_name
-  return acc
-}, {})
+import { startBak } from '@/api/bak'
 
 export default {
   name: 'TaskList',
   components: { Pagination },
   directives: { waves },
-  filters: {
-    loadtypeFilter(type) {
-      return loadTypeKeyValue[type]
-    }
-  },
   data() {
     return {
-      status: true,
       tableKey: 0,
       list: null,
       total: 0,
@@ -177,6 +161,26 @@ export default {
           this.$notify({
             title: 'Success',
             message: '删除成功',
+            type: 'success',
+            duration: 2000
+          })
+        })
+      })
+    },
+    handleStartBakTask(row, index) {
+      this.$confirm('是否启动备份任务?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const startQuery = {
+          'id': row.id
+        }
+        startBak(startQuery).then((response) => {
+          this.getList()
+          this.$notify({
+            title: 'Success',
+            message: '启动任务成功',
             type: 'success',
             duration: 2000
           })
