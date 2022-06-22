@@ -7,3 +7,12 @@ export function startBak(query) {
     params: query
   })
 }
+
+export function stopBak(query) {
+  return request({
+    url: '/bak/stop',
+    method: 'get',
+    params: query
+  })
+}
+

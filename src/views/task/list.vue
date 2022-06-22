@@ -41,22 +41,22 @@
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="主机" align="center" min-width="100px">
+      <el-table-column label="主机" align="center" min-width="80px">
         <template slot-scope="{ row }">
           <span>{{ row.host }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="数据库" align="center" min-width="100px">
+      <el-table-column label="数据库" align="center" min-width="30px">
         <template slot-scope="{ row }">
           <span>{{ row.db_name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="下次执行时间" align="center" min-width="100px">
+      <el-table-column label="下次执行时间" align="center" min-width="80px">
         <template slot-scope="{ row }">
           <span>{{ row.backup_cycle }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="备份任务状态" align="center" min-width="100px">
+      <el-table-column label="任务状态" align="center" min-width="30px">
         <template slot-scope="{ row }">
           <el-switch
             v-model="row.status"
@@ -66,7 +66,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="任务创建时间" align="center" min-width="100px">
+      <el-table-column label="任务创建时间" align="center" min-width="60px">
         <template slot-scope="{ row }">
           <span>{{ row.create_at }}</span>
         </template>
@@ -74,11 +74,12 @@
       <el-table-column
         label="操作"
         align="center"
-        width="230"
+        width="330"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="{ row, $index }">
           <el-button type="primary" size="mini" @click="handleStartBakTask(row,$index)"> 启动 </el-button>
+          <el-button type="primary" size="mini" @click="handleStopBakTask(row,$index)"> 停止 </el-button>
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             修改
           </el-button>
@@ -105,7 +106,7 @@
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import { taskList, taskDelete } from '@/api/task'
-import { startBak } from '@/api/bak'
+import { startBak, stopBak } from '@/api/bak'
 
 export default {
   name: 'TaskList',
@@ -146,7 +147,6 @@ export default {
       this.listQuery.page_no = 1
       this.getList()
     },
-
     handleDelete(row, index) {
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -184,6 +184,20 @@ export default {
             type: 'success',
             duration: 2000
           })
+        })
+      })
+    },
+    handleStopBakTask(row, index) {
+      const startQuery = {
+        'id': row.id
+      }
+      stopBak(startQuery).then((response) => {
+        this.getList()
+        this.$notify({
+          title: 'Success',
+          message: '任务停止成功',
+          type: 'success',
+          duration: 2000
         })
       })
     },
