@@ -41,22 +41,32 @@
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="主机" min-width="100px">
+      <el-table-column label="主机" align="center" min-width="100px">
         <template slot-scope="{ row }">
           <span>{{ row.host }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="数据库名" min-width="100px">
+      <el-table-column label="数据库" align="center" min-width="100px">
         <template slot-scope="{ row }">
           <span>{{ row.db_name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="备份周期" min-width="100px">
+      <el-table-column label="下次执行时间" align="center" min-width="100px">
         <template slot-scope="{ row }">
-          <span>{{ row.backup_cycle  }}</span>
+          <span>{{ row.backup_cycle }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" min-width="100px">
+      <el-table-column label="备份任务状态" align="center" min-width="100px">
+        <template slot-scope="{ row }">
+          <el-switch
+            v-model="row.Status"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            @change="handleDelete">
+          </el-switch>
+        </template>
+      </el-table-column>
+      <el-table-column label="任务创建时间" align="center" min-width="100px">
         <template slot-scope="{ row }">
           <span>{{ row.create_at }}</span>
         </template>
@@ -68,7 +78,7 @@
         class-name="small-padding fixed-width"
       >
         <template slot-scope="{ row, $index }">
-          <el-button type="primary" size="mini"> 统计 </el-button>
+          <el-button type="primary" size="mini"> 启动 </el-button>
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             修改
           </el-button>
@@ -94,7 +104,7 @@
 <script>
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { taskList } from '@/api/task'
+import { taskList, taskDelete } from '@/api/task'
 
 const loadTypeOptions = [
   { key: '0', display_name: 'HTTP' },
@@ -118,6 +128,7 @@ export default {
   },
   data() {
     return {
+      status: true,
       tableKey: 0,
       list: null,
       total: 0,
@@ -153,13 +164,24 @@ export default {
     },
 
     handleDelete(row, index) {
-      this.$notify({
-        title: 'Success',
-        message: 'Delete Successfully',
-        type: 'success',
-        duration: 2000
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const deleteQuery = {
+          'id': row.id
+        }
+        taskDelete(deleteQuery).then((response) => {
+          this.list.splice(index, 1)
+          this.$notify({
+            title: 'Success',
+            message: '删除成功',
+            type: 'success',
+            duration: 2000
+          })
+        })
       })
-      this.list.splice(index, 1)
     },
     rtClass: function(key) {
       const sort = this.listQuery.sort

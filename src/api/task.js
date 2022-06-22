@@ -8,3 +8,11 @@ export function taskList(data) {
     params: data
   })
 }
+
+export function taskDelete(query) {
+  return request({
+    url: '/task/taskdelete',
+    method: 'delete',
+    params: query
+  })
+}
