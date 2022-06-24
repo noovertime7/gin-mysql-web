@@ -16,3 +16,27 @@ export function taskDelete(query) {
     params: query
   })
 }
+
+export function taskAdd(data) {
+  return request({
+    url: '/task/taskadd',
+    method: 'post',
+    data
+  })
+}
+
+export function taskUpdate(data) {
+  return request({
+    url: '/task/taskupdate',
+    method: 'put',
+    data
+  })
+}
+
+export function taskDetail(query) {
+  return request({
+    url: '/task/taskdetail',
+    method: 'get',
+    params: query
+  })
+}

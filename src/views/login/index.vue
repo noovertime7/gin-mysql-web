@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">GO微服务网关</h3>
+        <h3 class="title">银河系数据中台</h3>
       </div>
 
       <el-form-item prop="username">

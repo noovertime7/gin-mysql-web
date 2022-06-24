@@ -87,7 +87,21 @@ export const constantRoutes = [
         component: () => import('@/views/task/list'),
         name: '任务列表',
         meta: { title: '任务列表', icon: 'component', affix: true }
-      }
+      },
+      {
+        path: 'task_add',
+        component: () => import('@/views/task/task'),
+        name: '新增任务',
+        meta: { title: '新增任务', icon: 'component', affix: false },
+        hidden: true
+      },
+      {
+        path: 'task_edit/:id(\\d+)',
+        component: () => import('@/views/task/task'),
+        name: '修改任务',
+        meta: { title: '修改任务', icon: 'component', affix: false },
+        hidden: true
+      },
     ]
   }
 ]

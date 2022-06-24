@@ -17,14 +17,16 @@
       >
         Search
       </el-button>
-      <el-button
-        class="filter-item"
-        style="margin-left: 10px"
-        type="primary"
-        icon="el-icon-edit"
-      >
-        Add
-      </el-button>
+      <router-link :to="'/task/task_add'">
+        <el-button
+          class="filter-item"
+          style="margin-left: 10px"
+          type="primary"
+          icon="el-icon-edit"
+        >
+          Add
+        </el-button>
+      </router-link>
     </div>
 
     <el-table
@@ -74,15 +76,13 @@
       <el-table-column
         label="操作"
         align="center"
-        width="330"
+        width="350"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="{ row, $index }">
           <el-button type="primary" size="mini" @click="handleStartBakTask(row,$index)"> 启动 </el-button>
           <el-button type="primary" size="mini" @click="handleStopBakTask(row,$index)"> 停止 </el-button>
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            修改
-          </el-button>
+          <el-button type="primary" size="mini" @click="handleEdit(row,$index)">修改</el-button>
           <el-button
             size="mini"
             type="danger"
@@ -93,7 +93,6 @@
         </template>
       </el-table-column>
     </el-table>
-
     <pagination
       v-show="total > 0"
       :total="total"
@@ -146,6 +145,9 @@ export default {
     handleFilter() {
       this.listQuery.page_no = 1
       this.getList()
+    },
+    handleEdit(row, index) {
+      this.$router.push('/task/task_edit/' + row.id)
     },
     handleDelete(row, index) {
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
