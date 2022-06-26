@@ -16,3 +16,10 @@ export function stopBak(query) {
   })
 }
 
+export function getBakHistoryList() {
+  return request({
+    url: '/bak/findallhistory',
+    method: 'get'
+  })
+}
+

@@ -15,7 +15,7 @@
         icon="el-icon-search"
         @click="handleFilter"
       >
-        Search
+        搜索
       </el-button>
       <router-link :to="'/task/task_add'">
         <el-button
@@ -24,7 +24,7 @@
           type="primary"
           icon="el-icon-edit"
         >
-          Add
+          添加任务
         </el-button>
       </router-link>
     </div>
