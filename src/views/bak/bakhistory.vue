@@ -79,7 +79,7 @@
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             下载
           </el-button>
-          <el-button size="mini" type="success" @click="handleModifyStatus(row,'published')">
+          <el-button size="mini" type="success" @click="Reduction">
             还原
           </el-button>
         </template>
@@ -168,12 +168,34 @@ export default {
       this.listQuery.page = 1
       this.getList()
     },
-    handleModifyStatus(row, status) {
+    Reduction() {
+      this.$prompt('还原备份影响数据库数据, 请输入还原密码', '安全校验', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(({ value }) => {
+        if (value !== 'admin123') {
+          this.$message({
+            type: 'error',
+            message: '输入的还原密码有误'
+          })
+          return
+        }
+        this.$message({
+          type: 'success',
+          message: '还原成功'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        })
+      })
+    },
+    handleModifyStatus() {
       this.$message({
         message: '操作Success',
         type: 'success'
       })
-      row.status = status
     },
     sortChange(data) {
       const { prop, order } = data

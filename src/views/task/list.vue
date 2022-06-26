@@ -83,13 +83,7 @@
           <el-button type="primary" size="mini" @click="handleStartBakTask(row,$index)"> 启动 </el-button>
           <el-button type="primary" size="mini" @click="handleStopBakTask(row,$index)"> 停止 </el-button>
           <el-button type="primary" size="mini" @click="handleEdit(row,$index)">修改</el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(row, $index)"
-          >
-            删除
-          </el-button>
+          <el-button size="mini" type="danger" @click="handleDelete">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -150,7 +144,7 @@ export default {
       this.$router.push('/task/task_edit/' + row.id)
     },
     handleDelete(row, index) {
-      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+      this.$confirm('此操作将删除该任务, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
