@@ -101,7 +101,20 @@ export const constantRoutes = [
         name: '修改任务',
         meta: { title: '修改任务', icon: 'component', affix: false },
         hidden: true
-      },
+      }
+    ]
+  },
+  {
+    path: '/bak',
+    component: Layout,
+    redirect: '/bak/list',
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/bak/bakhistory'),
+        name: '备份历史记录',
+        meta: { title: '备份历史记录', icon: 'skill', affix: true }
+      }
     ]
   }
 ]

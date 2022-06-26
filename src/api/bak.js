@@ -16,6 +16,15 @@ export function stopBak(query) {
   })
 }
 
+export function bakList(data) {
+  console.log(data)
+  return request({
+    url: '/bak/historylist',
+    method: 'get',
+    params: data
+  })
+}
+
 export function getBakHistoryList() {
   return request({
     url: '/bak/findallhistory',
