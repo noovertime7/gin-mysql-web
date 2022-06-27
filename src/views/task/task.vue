@@ -67,6 +67,9 @@
             <el-form-item v-if="form.is_oss_save===1" label="OssSecret">
               <el-input v-model="form.oss_secret" placeholder="OssSecret" />
             </el-form-item>
+            <el-form-item v-if="form.is_oss_save===1" label="桶名">
+              <el-input v-model="form.bucket_name" placeholder="bucket_name" />
+            </el-form-item>
             <el-form-item v-if="form.is_oss_save===1" label="Directory">
               <el-input v-model="form.directory" placeholder="OSS目录" />
             </el-form-item>

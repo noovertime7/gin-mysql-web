@@ -76,7 +76,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="364" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
+          <el-button type="primary" size="mini" @click="handleBakfileDownload(row)">
             下载
           </el-button>
           <el-button size="mini" type="success" @click="Reduction">
@@ -153,6 +153,10 @@ export default {
     this.getList()
   },
   methods: {
+    handleBakfileDownload(row) {
+      const url = 'http://127.0.0.1:8880/public/download'
+      window.open(`${url}?id=${row.id}`)
+    },
     getList() {
       this.listLoading = true
       bakList(this.listQuery).then(response => {
@@ -264,4 +268,3 @@ export default {
   }
 }
 </script>
-.0
