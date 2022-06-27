@@ -46,10 +46,10 @@
               />
             </el-form-item>
             <el-form-item v-if="form.is_ding_send===1" label="钉钉Secret">
-              <el-input v-model="form.ding_secret" placeholder="最多255字符必填"/>
+              <el-input v-model="form.ding_secret" placeholder="最多255字符必填" />
             </el-form-item>
             <el-form-item v-if="form.is_ding_send===1" label="钉钉AccessToken">
-              <el-input v-model="form.ding_access_token" placeholder="最多255字符必填"/>
+              <el-input v-model="form.ding_access_token" placeholder="最多255字符必填" />
             </el-form-item>
             <el-form-item v-if="form.is_oss_save===1" label="OSS类型">
               <el-radio-group v-model="form.oss_type">

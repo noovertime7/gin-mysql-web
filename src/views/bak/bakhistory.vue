@@ -154,8 +154,8 @@ export default {
   },
   methods: {
     handleBakfileDownload(row) {
-      const url = 'http://127.0.0.1:8880/public/download'
-      window.open(`${url}?id=${row.id}`)
+      console.log(row.cluster_ip)
+      window.open(`${row.cluster_ip}/public/download?id=${row.id}`)
     },
     getList() {
       this.listLoading = true
