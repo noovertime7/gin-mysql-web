@@ -74,7 +74,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" width="364" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             下载
@@ -104,7 +104,8 @@ import { bakList } from '@/api/bak'
 
 const loadTypeOptions = [
   { key: '0', display_name: '失败' },
-  { key: '1', display_name: '成功' }
+  { key: '1', display_name: '成功' },
+  { key: '2', display_name: '未启用' }
 ]
 const loadTypeKeyValue = loadTypeOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.display_name
@@ -183,11 +184,6 @@ export default {
         this.$message({
           type: 'success',
           message: '还原成功'
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
         })
       })
     },
