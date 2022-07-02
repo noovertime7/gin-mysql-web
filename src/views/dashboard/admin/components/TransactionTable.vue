@@ -1,6 +1,6 @@
 <template>
   <el-table :data="list" style="width: 100%;padding-top: 15px;">
-    <el-table-column label="备份主机" width="190" align="center">
+    <el-table-column label="备份主机" width="290" align="center">
       <template slot-scope="scope">
         {{ scope.row.host }}
       </template>
@@ -10,7 +10,7 @@
         {{ scope.row.db_name }}
       </template>
     </el-table-column>
-    <el-table-column label="备份时间" width="185" align="center">
+    <el-table-column label="备份时间" width="400" align="center">
       <template slot-scope="scope">
         {{ scope.row.bak_time }}
       </template>
