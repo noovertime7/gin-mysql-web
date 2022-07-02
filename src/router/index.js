@@ -113,7 +113,20 @@ export const constantRoutes = [
         path: 'list',
         component: () => import('@/views/bak/bakhistory'),
         name: '备份历史记录',
-        meta: { title: '备份历史记录', icon: 'skill', affix: true }
+        meta: { title: '备份历史记录', icon: 'skill', affix: false }
+      }
+    ]
+  },
+  {
+    path: '/host',
+    component: Layout,
+    redirect: '/host/list',
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/host/host'),
+        name: '主机列表',
+        meta: { title: '主机列表', icon: 'skill', affix: true }
       }
     ]
   }
