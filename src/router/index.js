@@ -127,6 +127,13 @@ export const constantRoutes = [
         component: () => import('@/views/host/host'),
         name: '主机列表',
         meta: { title: '主机列表', icon: 'skill', affix: true }
+      },
+      {
+        path: 'tasklist/:id(\\d+)',
+        component: () => import('@/views/host/task/list'),
+        name: '主机任务列表',
+        meta: { title: '主机任务列表', icon: 'component', affix: false },
+        hidden: true
       }
     ]
   }

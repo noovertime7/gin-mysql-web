@@ -1,11 +1,23 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.info" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input
+        v-model="listQuery.info"
+        placeholder="主机名"
+        style="width: 200px;"
+        class="filter-item"
+        @keyup.enter.native="handleFilter"
+      />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+      <el-button
+        class="filter-item"
+        style="margin-left: 10px;"
+        type="primary"
+        icon="el-icon-edit"
+        @click="handleCreate"
+      >
         Add
       </el-button>
     </div>
@@ -20,7 +32,14 @@
       style="width: 100%;"
       @sort-change="sortChange"
     >
-      <el-table-column label="ID" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
+      <el-table-column
+        label="ID"
+        prop="id"
+        sortable="custom"
+        align="center"
+        width="80"
+        :class-name="getSortClass('id')"
+      >
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
@@ -45,13 +64,10 @@
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
-          <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
-            Publish
+          <el-button type="primary" size="mini" @click="handleTaskdetail(row)">
+            任务列表
           </el-button>
-          <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
-            Draft
-          </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
+          <el-button size="mini" type="danger" @click="handleDelete(row,$index)">
             Delete
           </el-button>
         </template>
@@ -76,7 +92,7 @@
         <el-button @click="dialogFormVisible = false">
           取消
         </el-button>
-        <el-button type="primary" @click="handleSubmit(temp)">
+        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
           提交
         </el-button>
       </div>
@@ -87,7 +103,7 @@
 <script>
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination'
-import { hostDelete, hostList } from '@/api/host'
+import { hostDelete, hostList, hostAdd, hostUpdate } from '@/api/host'
 
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
@@ -132,10 +148,9 @@ export default {
       },
       importanceOptions: [1, 2, 3],
       calendarTypeOptions,
-      sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
-      statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: false,
       temp: {
+        id: '',
         host: '',
         username: 'root',
         password: ''
@@ -143,8 +158,8 @@ export default {
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
-        update: 'Edit',
-        create: 'Create'
+        update: '修改主机信息',
+        create: '添加主机信息'
       },
       rules: {
         host: [{ required: true, message: '请输入数据库主机信息', trigger: 'blur' }],
@@ -192,11 +207,39 @@ export default {
       }
       this.handleFilter()
     },
-    handleSubmit(row) {
-      console.log(row)
+    createData(row) {
+      const query = Object.assign({}, this.temp)
+      hostAdd(query).then((res) => {
+        this.dialogFormVisible = false
+        this.getList()
+        this.$notify({
+          title: 'Success',
+          message: '添加成功',
+          type: 'success',
+          duration: 2000
+        })
+      })
+    },
+    updateData() {
+      const query = Object.assign({}, this.temp)
+      hostUpdate(query).then((res) => {
+        this.dialogFormVisible = false
+        this.getList()
+        this.$notify({
+          title: 'Success',
+          message: '修改成功',
+          type: 'success',
+          duration: 2000
+        })
+      })
     },
     handleCreate() {
       this.dialogStatus = 'create'
+      this.temp = {
+        host: '',
+        username: 'root',
+        password: ''
+      }
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
@@ -204,10 +247,15 @@ export default {
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
+        this.temp = {
+          id: row.id,
+          host: row.host,
+          username: row.username,
+          password: row.password
+        }
         this.$refs['dataForm'].clearValidate()
       })
     },
@@ -230,6 +278,9 @@ export default {
           })
         })
       })
+    },
+    handleTaskdetail(row) {
+      this.$router.push('/host/tasklist/' + row.id)
     },
     getSortClass: function(key) {
       const sort = this.listQuery.sort
