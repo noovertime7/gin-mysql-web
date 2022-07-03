@@ -3,7 +3,7 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-people">
-          <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+          <svg-icon class-name="card-panel-icon" icon-class="skill" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
@@ -16,11 +16,11 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="message" class-name="card-panel-icon" />
+          <svg-icon class-name="card-panel-icon" icon-class="documentation" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            备份成功数
+            备份完成总数
           </div>
           <count-to :start-val="0" :end-val="data.successNum" :duration="3000" class="card-panel-num" />
         </div>
@@ -28,8 +28,8 @@
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-money">
-          <svg-icon icon-class="money" class-name="card-panel-icon" />
+        <div class="card-panel-icon-wrapper icon-shopping">
+          <svg-icon class-name="card-panel-icon" icon-class="example" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
@@ -41,8 +41,8 @@
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-shopping">
-          <svg-icon icon-class="shopping" class-name="card-panel-icon" />
+        <div class="card-panel-icon-wrapper icon-money">
+          <svg-icon class-name="card-panel-icon" icon-class="password" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">

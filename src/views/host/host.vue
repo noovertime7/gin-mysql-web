@@ -9,7 +9,7 @@
         @keyup.enter.native="handleFilter"
       />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        Search
+        搜索
       </el-button>
       <el-button
         class="filter-item"
@@ -18,7 +18,7 @@
         icon="el-icon-edit"
         @click="handleCreate"
       >
-        Add
+        新增主机
       </el-button>
     </div>
 
@@ -62,13 +62,13 @@
       <el-table-column label="Actions" align="center" width="330" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            Edit
+            修改主机
           </el-button>
           <el-button type="primary" size="mini" @click="handleTaskdetail(row)">
             任务列表
           </el-button>
           <el-button size="mini" type="danger" @click="handleDelete(row,$index)">
-            Delete
+            删除主机
           </el-button>
         </template>
       </el-table-column>
@@ -103,7 +103,7 @@
 <script>
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination'
-import { hostDelete, hostList, hostAdd, hostUpdate } from '@/api/host'
+import { hostAdd, hostDelete, hostList, hostUpdate } from '@/api/host'
 
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
