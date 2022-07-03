@@ -43,38 +43,38 @@
           <span>{{ row.file_size }}KB</span>
         </template>
       </el-table-column>
-      <el-table-column label="备份时间" width="200px" align="center">
+      <el-table-column align="center" label="备份时间" width="250px">
         <template slot-scope="{row}">
           <span>{{ row.bak_time }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="钉钉发送状态" width="110px" align="center">
+      <el-table-column align="center" label="钉钉发送状态" width="140px">
         <template slot-scope="{row}">
           <el-tag :type="row.ding_status | statusFilter">
             {{ row.ding_status|loadtypeFilter }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="OSS保存状态" width="110px" align="center">
+      <el-table-column align="center" label="OSS保存状态" width="140px">
         <template slot-scope="{row}">
           <el-tag :type="row.oss_status | statusFilter">
             {{ row.oss_status|loadtypeFilter }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column v-if="showReviewer" label="文件路径" width="110px" align="center">
+      <el-table-column v-if="showReviewer" align="center" label="文件路径" width="150">
         <template slot-scope="{row}">
           <span style="color:red;">{{ row.file_name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="备份状态" width="105" align="center">
+      <el-table-column align="center" label="备份状态" width="120">
         <template slot-scope="{row}">
           <el-tag :type="row.message | statusFilter">
             {{ row.message }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="382" class-name="small-padding fixed-width">
+      <el-table-column align="center" class-name="small-padding fixed-width" label="操作" width="257">
         <template slot-scope="{row}">
           <el-button type="primary" size="mini" @click="handleBakfileDownload(row)">
             下载
@@ -98,7 +98,6 @@
 
 <script>
 import waves from '@/directive/waves' // waves directive
-
 import Pagination from '@/components/Pagination'
 import { bakList } from '@/api/bak'
 import { downloadBakFile } from '@/api/public'
