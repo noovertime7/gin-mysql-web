@@ -17,16 +17,6 @@
       >
         搜索
       </el-button>
-      <router-link :to="'/task/task_add'">
-        <el-button
-          class="filter-item"
-          style="margin-left: 10px"
-          type="primary"
-          icon="el-icon-edit"
-        >
-          添加任务
-        </el-button>
-      </router-link>
     </div>
 
     <el-table
@@ -83,7 +73,7 @@
           <el-button type="primary" size="mini" @click="handleStartBakTask(row,$index)"> 启动 </el-button>
           <el-button type="primary" size="mini" @click="handleStopBakTask(row,$index)"> 停止 </el-button>
           <el-button type="primary" size="mini" @click="handleEdit(row,$index)">修改</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete">删除</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(row,$index)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -33,12 +33,12 @@
           <span>{{ row.host }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="数据库" width="100px" align="center">
+      <el-table-column label="数据库" width="150px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.db_name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="文件大小" width="150px" align="center">
+      <el-table-column label="文件大小" width="120px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.file_size }}KB</span>
         </template>
@@ -74,7 +74,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="364" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" width="382" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
           <el-button type="primary" size="mini" @click="handleBakfileDownload(row)">
             下载

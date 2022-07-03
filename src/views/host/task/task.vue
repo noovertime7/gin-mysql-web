@@ -8,15 +8,6 @@
         </div>
         <div style="margin-bottom:50px;">
           <el-form ref="form" :model="form" label-width="140px">
-            <el-form-item label="数据库备份主机地址">
-              <el-input v-model="form.host" placeholder="例如: 127.0.0.1:3306" />
-            </el-form-item>
-            <el-form-item label="数据库用户名">
-              <el-input v-model="form.user" placeholder="例如: root" />
-            </el-form-item>
-            <el-form-item label="数据库密码">
-              <el-input v-model="form.password" placeholder="例如: 123456" />
-            </el-form-item>
             <el-form-item label="数据库名">
               <el-input v-model="form.db_name" placeholder="例如: mysql" />
             </el-form-item>
@@ -94,13 +85,14 @@ export default {
       form: {
         id: '',
         host: '',
+        host_id: '',
         password: '',
         user: '',
         db_name: '',
         backup_cycle: '',
         keep_number: '',
         is_all_dbBak: 0,
-        is_ding_send: 1,
+        is_ding_send: 0,
         is_oss_save: 0,
         ding_access_token: '',
         ding_secret: '',
@@ -115,22 +107,29 @@ export default {
   },
   created() {
     const id = this.$route.params && this.$route.params.id
+    const host_id = this.$route.params && this.$route.params.host_id
+    this.changeHostid(host_id)
     if (id > 0) {
       this.isEdit = true
       this.fetchData(id)
     }
   },
   methods: {
+    changeHostid(hid) {
+      this.form.host_id = hid
+    },
     fetchData(id) {
       const query = { 'id': id }
       taskDetail(query).then(response => {
         this.form.id = Number(id)
+        console.log(response.data.host_info)
         this.form.keep_number = response.data.task_info.keep_number
         this.form.db_name = response.data.task_info.db_name
-        this.form.host = response.data.task_info.host
         this.form.is_all_dbbak = response.data.task_info.is_all_dbbak
-        this.form.user = response.data.task_info.user
-        this.form.password = response.data.task_info.password
+        this.form.host = response.data.host_info.host
+        this.form.user = response.data.host_info.user
+        this.form.host_id = response.data.host_info.host_id
+        this.form.password = response.data.host_info.password
         this.form.backup_cycle = response.data.task_info.backup_cycle
         this.form.is_ding_send = response.data.ding.is_ding_send
         this.form.ding_secret = response.data.ding.ding_secret
@@ -149,7 +148,7 @@ export default {
       this.submitButDisabled = true
       const query = Object.assign({}, this.form)
       query.keep_number = Number(query.keep_number)
-      console.log(query)
+      query.host_id = Number(query.host_id)
       if (this.isEdit) {
         taskUpdate(query).then(response => {
           this.submitButDisabled = false

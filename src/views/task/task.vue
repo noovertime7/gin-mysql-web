@@ -100,7 +100,7 @@ export default {
         backup_cycle: '',
         keep_number: '',
         is_all_dbBak: 0,
-        is_ding_send: 1,
+        is_ding_send: 0,
         is_oss_save: 0,
         ding_access_token: '',
         ding_secret: '',

@@ -78,6 +78,40 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/host',
+    component: Layout,
+    redirect: '/host/list',
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/host/host'),
+        name: '主机列表',
+        meta: { title: '主机列表', icon: 'skill', affix: true }
+      },
+      {
+        path: 'tasklist/:id(\\d+)',
+        component: () => import('@/views/host/task/list'),
+        name: '主机任务列表',
+        meta: { title: '主机任务列表', icon: 'component', affix: false },
+        hidden: true
+      },
+      {
+        path: 'task_add/:host_id(\\d+)',
+        component: () => import('@/views/host/task/task'),
+        name: '新增主机任务',
+        meta: { title: '新增主机任务', icon: 'component', affix: false },
+        hidden: true
+      },
+      {
+        path: 'task_edit/:id(\\d+)',
+        component: () => import('@/views/host/task/task'),
+        name: '修改主机任务',
+        meta: { title: '修改主机任务', icon: 'component', affix: false },
+        hidden: true
+      }
+    ]
+  },
+  {
     path: '/task',
     component: Layout,
     redirect: '/task/list',
@@ -114,26 +148,6 @@ export const constantRoutes = [
         component: () => import('@/views/bak/bakhistory'),
         name: '备份历史记录',
         meta: { title: '备份历史记录', icon: 'skill', affix: false }
-      }
-    ]
-  },
-  {
-    path: '/host',
-    component: Layout,
-    redirect: '/host/list',
-    children: [
-      {
-        path: 'list',
-        component: () => import('@/views/host/host'),
-        name: '主机列表',
-        meta: { title: '主机列表', icon: 'skill', affix: true }
-      },
-      {
-        path: 'tasklist/:id(\\d+)',
-        component: () => import('@/views/host/task/list'),
-        name: '主机任务列表',
-        meta: { title: '主机任务列表', icon: 'component', affix: false },
-        hidden: true
       }
     ]
   }

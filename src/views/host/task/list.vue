@@ -17,20 +17,18 @@
       >
         搜索
       </el-button>
-      <router-link :to="'/task/task_add'">
-        <el-button
-          class="filter-item"
-          style="margin-left: 10px"
-          type="primary"
-          icon="el-icon-edit"
-        >
-          添加任务
-        </el-button>
-      </router-link>
+      <el-button
+        class="filter-item"
+        style="margin-left: 10px"
+        type="primary"
+        icon="el-icon-edit"
+        @click="handleAddTask"
+      >
+        添加任务
+      </el-button>
     </div>
 
     <el-table
-      :key="tableKey"
       v-loading="listLoading"
       :data="list"
       border
@@ -83,7 +81,7 @@
           <el-button type="primary" size="mini" @click="handleStartBakTask(row,$index)"> 启动 </el-button>
           <el-button type="primary" size="mini" @click="handleStopBakTask(row,$index)"> 停止 </el-button>
           <el-button type="primary" size="mini" @click="handleEdit(row,$index)">修改</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete">删除</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(row,$index)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -107,7 +105,6 @@ export default {
   directives: { waves },
   data() {
     return {
-      tableKey: 0,
       list: null,
       total: 0,
       listLoading: true,
@@ -149,7 +146,10 @@ export default {
       this.getList()
     },
     handleEdit(row, index) {
-      this.$router.push('/task/task_edit/' + row.id)
+      this.$router.push('/host/task_edit/' + row.id)
+    },
+    handleAddTask() {
+      this.$router.push('/host/task_add/' + this.hostId)
     },
     handleDelete(row, index) {
       this.$confirm('此操作将删除该任务, 是否继续?', '提示', {

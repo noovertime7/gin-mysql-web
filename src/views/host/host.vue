@@ -210,14 +210,16 @@ export default {
     createData(row) {
       const query = Object.assign({}, this.temp)
       hostAdd(query).then((res) => {
-        this.dialogFormVisible = false
-        this.getList()
-        this.$notify({
-          title: 'Success',
-          message: '添加成功',
-          type: 'success',
-          duration: 2000
-        })
+        if (res.errno === 0) {
+          this.dialogFormVisible = false
+          this.getList()
+          this.$notify({
+            title: 'Success',
+            message: '添加成功',
+            type: 'success',
+            duration: 2000
+          })
+        }
       })
     },
     updateData() {
