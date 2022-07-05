@@ -57,7 +57,9 @@
       </el-table-column>
       <el-table-column label="在线状态" width="300px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.host_status }}</span>
+          <el-tag :type="row.host_status | statusFilter">
+            {{ row.host_status | loadtypeFilter }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="Actions" align="center" width="330" class-name="small-padding fixed-width">
@@ -106,15 +108,12 @@ import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination'
 import { hostAdd, hostDelete, hostList, hostUpdate } from '@/api/host'
 
-const calendarTypeOptions = [
-  { key: 'CN', display_name: 'China' },
-  { key: 'US', display_name: 'USA' },
-  { key: 'JP', display_name: 'Japan' },
-  { key: 'EU', display_name: 'Eurozone' }
+const loadTypeOptions = [
+  { key: '0', display_name: '离线' },
+  { key: '1', display_name: '在线' }
 ]
-
 // arr to obj, such as { CN : "China", US : "USA" }
-const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
+const loadTypeKeyValue = loadTypeOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.display_name
   return acc
 }, {})
@@ -124,16 +123,16 @@ export default {
   components: { Pagination },
   directives: { waves },
   filters: {
+    loadtypeFilter(type) {
+      return loadTypeKeyValue[type]
+    },
     statusFilter(status) {
       const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
+        success: 'success',
+        1: 'success',
+        0: 'danger'
       }
       return statusMap[status]
-    },
-    typeFilter(type) {
-      return calendarTypeKeyValue[type]
     }
   },
   data() {
@@ -148,7 +147,6 @@ export default {
         info: ''
       },
       importanceOptions: [1, 2, 3],
-      calendarTypeOptions,
       showReviewer: false,
       temp: {
         id: '',
