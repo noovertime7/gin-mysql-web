@@ -8,15 +8,6 @@
         </div>
         <div style="margin-bottom:50px;">
           <el-form ref="form" :model="form" label-width="140px">
-            <el-form-item label="数据库备份主机地址">
-              <el-input v-model="form.host" placeholder="例如: 127.0.0.1:3306" />
-            </el-form-item>
-            <el-form-item label="数据库用户名">
-              <el-input v-model="form.user" placeholder="例如: root" />
-            </el-form-item>
-            <el-form-item label="数据库密码">
-              <el-input v-model="form.password" placeholder="例如: 123456" />
-            </el-form-item>
             <el-form-item label="数据库名">
               <el-input v-model="form.db_name" placeholder="例如: mysql" />
             </el-form-item>

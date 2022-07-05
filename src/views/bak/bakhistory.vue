@@ -99,7 +99,7 @@
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination'
 import { bakList } from '@/api/bak'
-import { downloadBakFile } from '@/api/public'
+import { checkDownloadBakFile } from '@/api/public'
 
 const loadTypeOptions = [
   { key: '0', display_name: '失败' },
@@ -153,7 +153,7 @@ export default {
   },
   methods: {
     handleBakfileDownload(row) {
-      downloadBakFile(row.id).then((res) => {
+      checkDownloadBakFile(row.id).then((res) => {
         window.open(`${res.data}?id=${row.id}`, '_self')
       })
     },

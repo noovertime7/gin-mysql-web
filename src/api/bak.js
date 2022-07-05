@@ -16,6 +16,22 @@ export function stopBak(query) {
   })
 }
 
+export function startAllBak(query) {
+  return request({
+    url: '/bak/start_bak_all',
+    method: 'get',
+    params: query
+  })
+}
+
+export function stopALlBak(hostid) {
+  return request({
+    url: '/bak/stop_bak_all',
+    method: 'get',
+    params: hostid
+  })
+}
+
 export function bakList(data) {
   console.log(data)
   return request({

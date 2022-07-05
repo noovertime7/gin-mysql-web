@@ -11,7 +11,7 @@
       <el-button
         v-waves
         class="filter-item"
-        type="primary"
+        plain
         icon="el-icon-search"
         @click="handleFilter"
       >
@@ -19,12 +19,30 @@
       </el-button>
       <el-button
         class="filter-item"
-        style="margin-left: 10px"
-        type="primary"
+        plain
+        type="success"
         icon="el-icon-edit"
         @click="handleAddTask"
       >
         添加任务
+      </el-button>
+      <el-button
+        class="filter-item"
+        type="success"
+        plain
+        icon="el-icon-video-play"
+        @click="handleStartAllTask"
+      >
+        启动所有任务
+      </el-button>
+      <el-button
+        class="filter-item"
+        type="primary"
+        plain
+        icon="el-icon-switch-button"
+        @click="handleStopAllTask"
+      >
+        关闭所有任务
       </el-button>
     </div>
 
@@ -78,10 +96,10 @@
         class-name="small-padding fixed-width"
       >
         <template slot-scope="{ row, $index }">
-          <el-button type="primary" size="mini" @click="handleStartBakTask(row,$index)"> 启动 </el-button>
-          <el-button type="primary" size="mini" @click="handleStopBakTask(row,$index)"> 停止 </el-button>
-          <el-button type="primary" size="mini" @click="handleEdit(row,$index)">修改</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(row,$index)">删除</el-button>
+          <el-button type="success" plain size="mini" @click="handleStartBakTask(row,$index)"> 启动 </el-button>
+          <el-button type="info" plain size="mini" @click="handleStopBakTask(row,$index)"> 停止 </el-button>
+          <el-button type="primary" plain size="mini" @click="handleEdit(row,$index)">修改</el-button>
+          <el-button size="mini" plain type="danger" @click="handleDelete(row,$index)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -97,7 +115,7 @@
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import { taskList, taskDelete } from '@/api/task'
-import { startBak, stopBak } from '@/api/bak'
+import { startAllBak, startBak, stopALlBak, stopBak } from '@/api/bak'
 
 export default {
   name: 'TaskList',
@@ -139,6 +157,34 @@ export default {
         setTimeout(() => {
           this.listLoading = false
         }, 0.1 * 1000)
+      })
+    },
+    handleStartAllTask() {
+      const startQuery = {
+        'host_id': this.hostId
+      }
+      startAllBak(startQuery).then((response) => {
+        this.getList()
+        this.$notify({
+          title: 'Success',
+          message: '批量任务启动成功',
+          type: 'success',
+          duration: 2000
+        })
+      })
+    },
+    handleStopAllTask() {
+      const stopQuery = {
+        'host_id': this.hostId
+      }
+      stopALlBak(stopQuery).then((response) => {
+        this.getList()
+        this.$notify({
+          title: 'Success',
+          message: '批量任务关闭成功',
+          type: 'success',
+          duration: 2000
+        })
       })
     },
     handleFilter() {

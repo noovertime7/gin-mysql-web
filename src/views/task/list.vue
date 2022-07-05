@@ -11,7 +11,6 @@
       <el-button
         v-waves
         class="filter-item"
-        type="primary"
         icon="el-icon-search"
         @click="handleFilter"
       >
