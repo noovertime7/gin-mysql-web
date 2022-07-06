@@ -33,7 +33,7 @@
         icon="el-icon-video-play"
         @click="handleStartAllTask"
       >
-        启动所有任务
+        启动主机下所有任务
       </el-button>
       <el-button
         class="filter-item"
@@ -42,7 +42,7 @@
         icon="el-icon-switch-button"
         @click="handleStopAllTask"
       >
-        关闭所有任务
+        关闭主机下所有任务
       </el-button>
     </div>
 
@@ -115,7 +115,7 @@
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import { taskList, taskDelete } from '@/api/task'
-import { startAllBak, startBak, stopALlBak, stopBak } from '@/api/bak'
+import { startAllBakByHost, startBak, stopAllBakByHost, stopBak } from '@/api/bak'
 
 export default {
   name: 'TaskList',
@@ -163,7 +163,7 @@ export default {
       const startQuery = {
         'host_id': this.hostId
       }
-      startAllBak(startQuery).then((response) => {
+      startAllBakByHost(startQuery).then((response) => {
         this.getList()
         this.$notify({
           title: 'Success',
@@ -177,7 +177,7 @@ export default {
       const stopQuery = {
         'host_id': this.hostId
       }
-      stopALlBak(stopQuery).then((response) => {
+      stopAllBakByHost(stopQuery).then((response) => {
         this.getList()
         this.$notify({
           title: 'Success',

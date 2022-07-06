@@ -47,8 +47,7 @@
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
 
-      <div style="position:relative">
-      </div>
+      <div style="position:relative" />
     </el-form>
   </div>
 </template>

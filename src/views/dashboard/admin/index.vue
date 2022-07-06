@@ -63,16 +63,16 @@ export default {
         taskNum: 0,
         successNum: 0,
         runningNum: 0,
-        stopNum: 0
+        hostNum: 0
       }
     }
   },
   created() {
     panelGroupData().then((res) => {
+      this.panelGroupData.hostNum = res.data.host_num
       this.panelGroupData.taskNum = res.data.task_num
       this.panelGroupData.successNum = res.data.history_num
       this.panelGroupData.runningNum = res.data.running_pro_num
-      this.panelGroupData.stopNum = res.data.stop_pro_num
     })
   },
   methods: {

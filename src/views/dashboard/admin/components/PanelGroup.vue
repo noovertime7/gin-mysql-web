@@ -3,6 +3,19 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-people">
+          <svg-icon class-name="card-panel-icon" icon-class="tree" />
+        </div>
+        <div class="card-panel-description">
+          <div class="card-panel-text">
+            主机数
+          </div>
+          <count-to :start-val="0" :end-val="data.hostNum" :duration="2600" class="card-panel-num" />
+        </div>
+      </div>
+    </el-col>
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel">
+        <div class="card-panel-icon-wrapper icon-people">
           <svg-icon class-name="card-panel-icon" icon-class="skill" />
         </div>
         <div class="card-panel-description">
@@ -39,19 +52,6 @@
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-money">
-          <svg-icon class-name="card-panel-icon" icon-class="password" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">
-            停止中任务
-          </div>
-          <count-to :start-val="0" :end-val="data.stopNum" :duration="3600" class="card-panel-num" />
-        </div>
-      </div>
-    </el-col>
   </el-row>
 </template>
 
@@ -67,10 +67,10 @@ export default {
       type: Object,
       default() {
         return {
+          hostNum: 0,
           taskNum: 0,
           successNum: 0,
-          runningNum: 0,
-          stopNum: 0
+          runningNum: 0
         }
       }
     }

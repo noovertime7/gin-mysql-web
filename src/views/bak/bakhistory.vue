@@ -68,9 +68,11 @@
       </el-table-column>
       <el-table-column align="center" label="备份状态" width="120">
         <template slot-scope="{row}">
-          <el-tag :type="row.message | statusFilter">
-            {{ row.message }}
-          </el-tag>
+          <el-tooltip :content="row.message" placement="top-start" effect="light">
+            <el-tag :type="row.message | statusFilter">
+              {{ row.message }}
+            </el-tag>
+          </el-tooltip>
         </template>
       </el-table-column>
       <el-table-column align="center" class-name="small-padding fixed-width" label="操作" width="257">

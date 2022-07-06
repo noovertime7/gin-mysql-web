@@ -16,6 +16,24 @@
       >
         搜索
       </el-button>
+      <el-button
+        class="filter-item"
+        type="success"
+        plain
+        icon="el-icon-video-play"
+        @click="handleStartAllTask"
+      >
+        启动所有任务
+      </el-button>
+      <el-button
+        class="filter-item"
+        type="primary"
+        plain
+        icon="el-icon-switch-button"
+        @click="handleStopAllTask"
+      >
+        关闭所有任务
+      </el-button>
     </div>
 
     <el-table
@@ -71,7 +89,6 @@
         <template slot-scope="{ row, $index }">
           <el-button type="primary" size="mini" @click="handleStartBakTask(row,$index)"> 启动 </el-button>
           <el-button type="primary" size="mini" @click="handleStopBakTask(row,$index)"> 停止 </el-button>
-          <el-button type="primary" size="mini" @click="handleEdit(row,$index)">修改</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(row,$index)">删除</el-button>
         </template>
       </el-table-column>
@@ -88,7 +105,7 @@
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import { taskList, taskDelete } from '@/api/task'
-import { startBak, stopBak } from '@/api/bak'
+import { startAllBak, startBak, stopAllBak, stopBak } from '@/api/bak'
 
 export default {
   name: 'TaskList',
@@ -128,9 +145,6 @@ export default {
     handleFilter() {
       this.listQuery.page_no = 1
       this.getList()
-    },
-    handleEdit(row, index) {
-      this.$router.push('/task/task_edit/' + row.id)
     },
     handleDelete(row, index) {
       this.$confirm('此操作将删除该任务, 是否继续?', '提示', {
@@ -181,6 +195,28 @@ export default {
         this.$notify({
           title: 'Success',
           message: '任务停止成功',
+          type: 'success',
+          duration: 2000
+        })
+      })
+    },
+    handleStartAllTask() {
+      startAllBak().then((response) => {
+        this.getList()
+        this.$notify({
+          title: 'Success',
+          message: '批量任务启动成功',
+          type: 'success',
+          duration: 2000
+        })
+      })
+    },
+    handleStopAllTask() {
+      stopAllBak().then((response) => {
+        this.getList()
+        this.$notify({
+          title: 'Success',
+          message: '批量任务关闭成功',
           type: 'success',
           duration: 2000
         })
