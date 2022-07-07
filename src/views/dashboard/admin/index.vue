@@ -13,7 +13,7 @@
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <pie-chart />
+          <pie-chart :chart-data="pieChartData" />
         </div>
       </el-col>
     </el-row>
@@ -27,7 +27,7 @@ import PanelGroup from './components/PanelGroup'
 import LineChart from './components/LineChart'
 import PieChart from './components/PieChart'
 import TransactionTable from './components/TransactionTable'
-import { panelGroupData } from '@/api/dashboard'
+import { panelGroupData, pieChartData } from '@/api/dashboard'
 
 const lineChartData = {
   newVisitis: {
@@ -64,20 +64,42 @@ export default {
         successNum: 0,
         runningNum: 0,
         hostNum: 0
+      },
+      pieChartData: {
+        'title': '主机备份任务占比',
+        'legend': ['主机1', '主机2', '主机3', '主机4', '主机5'],
+        'series': [
+          { value: 20, name: '主机1' },
+          { value: 24, name: '主机2' },
+          { value: 49, name: '主机3' },
+          { value: 100, name: '主机4' },
+          { value: 9, name: '主机5' }
+        ]
       }
     }
   },
   created() {
-    panelGroupData().then((res) => {
-      this.panelGroupData.hostNum = res.data.host_num
-      this.panelGroupData.taskNum = res.data.task_num
-      this.panelGroupData.successNum = res.data.history_num
-      this.panelGroupData.runningNum = res.data.running_pro_num
-    })
+    this.fetchPanelGroupData()
+    this.fetchPieChartData()
   },
   methods: {
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type]
+    },
+    fetchPanelGroupData() {
+      panelGroupData().then((res) => {
+        this.panelGroupData.hostNum = res.data.host_num
+        this.panelGroupData.taskNum = res.data.task_num
+        this.panelGroupData.successNum = res.data.history_num
+        this.panelGroupData.runningNum = res.data.running_pro_num
+      })
+    },
+    fetchPieChartData() {
+      pieChartData({ }).then(response => {
+        this.pieChartData.legend = response.data.legend
+        this.pieChartData.series = response.data.data
+      }).catch(() => {
+      })
     }
   }
 }

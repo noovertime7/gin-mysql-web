@@ -10,7 +10,7 @@
         {{ scope.row.db_name }}
       </template>
     </el-table-column>
-    <el-table-column label="备份时间" width="400" align="center">
+    <el-table-column label="备份时间" width="300" align="center">
       <template slot-scope="scope">
         {{ scope.row.bak_time }}
       </template>

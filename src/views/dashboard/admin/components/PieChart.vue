@@ -21,11 +21,36 @@ export default {
     height: {
       type: String,
       default: '430px'
+    },
+    chartData: {
+      type: Object,
+      required: true,
+      default() {
+        return {
+          'title': '主机任务统计',
+          'legend': ['主机1', '主机2', '主机3', '主机4', '主机5'],
+          'series': [
+            { value: 320, name: '主机1' },
+            { value: 240, name: '主机2' },
+            { value: 149, name: '主机3' },
+            { value: 100, name: '主机4' },
+            { value: 59, name: '主机5' }
+          ]
+        }
+      }
     }
   },
   data() {
     return {
       chart: null
+    }
+  },
+  watch: {
+    chartData: {
+      deep: true,
+      handler(val) {
+        this.initChart()
+      }
     }
   },
   mounted() {
@@ -45,6 +70,12 @@ export default {
       this.chart = echarts.init(this.$el, 'macarons')
 
       this.chart.setOption({
+        title: {
+          text: this.chartData.title,
+          textStyle: {
+            fontSize: 15
+          }
+        },
         tooltip: {
           trigger: 'item',
           formatter: '{a} <br/>{b} : {c} ({d}%)'
@@ -52,22 +83,17 @@ export default {
         legend: {
           left: 'center',
           bottom: '10',
-          data: ['Industries', 'Technology', 'Forex', 'Gold', 'Forecasts']
+          data: this.chartData.legend
         },
         series: [
           {
-            name: 'WEEKLY WRITE ARTICLES',
+            name: '服务占比',
             type: 'pie',
-            roseType: 'radius',
-            radius: [15, 95],
-            center: ['50%', '38%'],
-            data: [
-              { value: 320, name: 'Industries' },
-              { value: 240, name: 'Technology' },
-              { value: 149, name: 'Forex' },
-              { value: 100, name: 'Gold' },
-              { value: 59, name: 'Forecasts' }
-            ],
+            top: 20,
+            // roseType: 'radius',
+            radius: '55%',
+            center: ['50%', '45%'],
+            data: this.chartData.series,
             animationEasing: 'cubicInOut',
             animationDuration: 2600
           }

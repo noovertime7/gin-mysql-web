@@ -6,3 +6,10 @@ export function panelGroupData() {
     method: 'get'
   })
 }
+
+export function pieChartData() {
+  return request({
+    url: 'dashboard/pie_chart_data',
+    method: 'get'
+  })
+}
