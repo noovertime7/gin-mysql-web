@@ -45,12 +45,12 @@
             <el-form-item v-if="form.is_oss_save===1" label="OSS类型">
               <el-radio-group v-model="form.oss_type">
                 <el-radio :label="0">阿里云</el-radio>
-                <el-radio :label="1">七牛云</el-radio>
+                <el-radio :label="1">Minio</el-radio>
                 <el-radio :label="2">MyCloud</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item v-if="form.is_oss_save===1" label="OssEndpoint">
-              <el-input v-model="form.endpoint" placeholder="OssEndpoint" />
+              <el-input v-model="form.endpoint" placeholder="对象存储地址 minio要写9000数据端口" />
             </el-form-item>
             <el-form-item v-if="form.is_oss_save===1" label="OssAccess">
               <el-input v-model="form.oss_access" placeholder="OssAccess" />
@@ -62,7 +62,7 @@
               <el-input v-model="form.bucket_name" placeholder="bucket_name" />
             </el-form-item>
             <el-form-item v-if="form.is_oss_save===1" label="Directory">
-              <el-input v-model="form.directory" placeholder="OSS目录" />
+              <el-input v-model="form.directory" placeholder="桶内指定目录" />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="handleSubmit">立即提交</el-button>
@@ -96,7 +96,7 @@ export default {
         is_oss_save: 0,
         ding_access_token: '',
         ding_secret: '',
-        oss_type: 0,
+        oss_type: 1,
         endpoint: '',
         oss_access: '',
         oss_secret: '',

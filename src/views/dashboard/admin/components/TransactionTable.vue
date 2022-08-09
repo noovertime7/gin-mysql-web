@@ -10,12 +10,12 @@
         {{ scope.row.db_name }}
       </template>
     </el-table-column>
-    <el-table-column label="备份时间" width="300" align="center">
+    <el-table-column label="备份时间" width="200" align="center">
       <template slot-scope="scope">
         {{ scope.row.bak_time }}
       </template>
     </el-table-column>
-    <el-table-column label="备份状态" width="100" align="center">
+    <el-table-column label="备份状态" width="280" align="center">
       <template slot-scope="{row}">
         <el-tag :type="row.message | statusFilter">
           {{ row.message }}

@@ -55,6 +55,11 @@
           <span>{{ row.task_num }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="备注" width="350px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.content }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="在线状态" width="300px" align="center">
         <template slot-scope="{row}">
           <el-tag :type="row.host_status | statusFilter">
@@ -88,7 +93,10 @@
           <el-input v-model="temp.username" placeholder="请输入数据库用户名 默认root" />
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="temp.password" placeholder="请输入数据库密码" />
+          <el-input v-model="temp.password" placeholder="请输入数据库密码" show-password />
+        </el-form-item>
+        <el-form-item label="备注" prop="content">
+          <el-input v-model="temp.content" placeholder="备注" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -152,7 +160,8 @@ export default {
         id: '',
         host: '',
         username: 'root',
-        password: ''
+        password: '',
+        content: ''
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -239,7 +248,8 @@ export default {
       this.temp = {
         host: '',
         username: 'root',
-        password: ''
+        password: '',
+        content: ''
       }
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -255,7 +265,8 @@ export default {
           id: row.id,
           host: row.host,
           username: row.username,
-          password: row.password
+          password: row.password,
+          content: row.content
         }
         this.$refs['dataForm'].clearValidate()
       })
