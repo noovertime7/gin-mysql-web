@@ -13,3 +13,10 @@ export function pieChartData() {
     method: 'get'
   })
 }
+
+export function GetBarData() {
+  return request({
+    url: '/agent/barchart',
+    method: 'get'
+  })
+}

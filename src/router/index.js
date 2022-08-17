@@ -150,7 +150,62 @@ export const constantRoutes = [
         meta: { title: '备份历史记录', icon: 'skill', affix: false }
       }
     ]
-  }
+  },
+  {
+    path: '/cluster',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: '集群管理',
+    meta: {
+      title: '集群管理',
+      icon: 'chart'
+    },
+    children: [
+      {
+        path: 'service',
+        component: () => import('@/views/cluster/service/serviceList'),
+        name: '服务列表',
+        meta: { title: '服务列表', noCache: true }
+      },
+      {
+        path: 'list/:servicename',
+        component: () => import('@/views/cluster/service/task/list'),
+        name: '集群任务列表',
+        meta: { title: '集群任务列表',  noCache: true },
+        hidden: true
+      },
+      {
+        path: 'host',
+        component: () => import('@/views/cluster/host/serviceHost'),
+        name: '主机管理',
+        meta: { title: '主机管理', noCache: true }
+      },
+      {
+        path: 'history',
+        component: () => import('@/views/cluster/history/bakhistory'),
+        name: '备份历史',
+        meta: { title: '备份历史', noCache: true }
+      },
+      {
+        path: 'task_add/:hostid(\\d+)/:servicename/:action',
+        component: () => import('@/views/cluster/service/task/task'),
+        name: '新增任务',
+        meta: { title: '新增任务', icon: 'component', affix: false },
+        hidden: true
+      },
+      {
+        path: 'task_edit/:hostid(\\d+)/:taskid(\\d+)/:servicename/:action',
+        component: () => import('@/views/cluster/service/task/task'),
+        name: '修改任务',
+        meta: { title: '修改任务', icon: 'component', affix: false },
+        hidden: true
+      },
+    ]
+  },
+  // {
+  //   path: '/:pathMatch(.*)',
+  //   redirect: '404'
+  // },
 ]
 
 /**
