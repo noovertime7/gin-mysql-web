@@ -268,6 +268,7 @@ export default {
       const query = Object.assign({}, this.temp)
       // 发起创建Host请求
       CreateAgentHost(query).then((res) => {
+        console.log(res)
         if (res.errno === 0) {
           this.dialogFormVisible = false
           this.getList()

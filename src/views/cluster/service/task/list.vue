@@ -207,7 +207,19 @@ export default {
     },
     getHostList() {
       this.listQuery.service_name = this.service_name
+
       GetAgentHostList(this.listQuery).then(res => {
+        // 判断当前服务是否拥有主机信息
+        if (res.data.Total <1 || res.data.Total === undefined ) {
+          this.$notify({
+            title: 'Success',
+            message: '当前服务备份主机为空,请先添加备份主机',
+            type: 'success',
+            duration: 1000
+          })
+          this.$router.push("/cluster/host")
+          return
+        }
         this.HostList = res.data.listItem
         // 默认请求服务第一个
         this.HostValue = this.HostList[0].Host
@@ -318,6 +330,7 @@ export default {
       })
     },
     handleStopBakTask(row, index) {
+      console.log(row)
       const startQuery = {
         'task_id': row.ID,
         'service_name': this.service_name
