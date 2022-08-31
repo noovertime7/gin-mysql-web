@@ -94,7 +94,7 @@
           <span>{{ row.Message }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" class-name="small-padding fixed-width" label="操作" width="257" fixed="right">
+      <el-table-column align="center" class-name="small-padding fixed-width" label="操作" width="200" fixed="right">
         <template slot-scope="{row}">
           <el-button type="warning" size="mini" @click="deleteHistory(row)">
             删除

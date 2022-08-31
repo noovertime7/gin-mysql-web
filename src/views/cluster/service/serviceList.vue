@@ -23,31 +23,58 @@
       style="width: 100%;"
       @sort-change="sortChange"
     >
-      <el-table-column
-        label="服务ID"
-        prop="id"
-        align="center"
-        width="450px"
-        :class-name="getSortClass('id')"
-      >
+      <el-table-column label="服务名" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.service_id }}</span>
+          <span>{{ row.service_name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="服务名" width="550px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="IP地址" width="450px" align="center">
+      <el-table-column label="服务地址" width="200px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.address }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="432px" class-name="small-padding fixed-width">
-        <template slot-scope="{row,$index}">
+      <el-table-column label="备注" width="200px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.content }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="服务状态" width="150px" align="center">
+        <template slot-scope="{row}">
+          <el-tag :type="row.agent_status | statusFilter">
+            {{ row.agent_status | loadtypeFilter }}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="任务数" width="100px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.task_num }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="任务完成数" width="100px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.finish_num }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="上次注册时间" width="220px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.last_time }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="创建时间" width="200px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.create_at }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center" width="300px" class-name="small-padding fixed-width" fixed="right">
+        <template slot-scope="{row}">
           <el-button type="primary" size="mini" @click="handleTaskdetail(row)">
-            任务列表
+            Mysql备份
+          </el-button>
+          <el-button type="primary" size="mini" @click="handleAgentEsList(row)">
+            ES快照
+          </el-button>
+          <el-button type="primary" size="mini" disabled @click="handleTaskdetail(row)">
+            Etcd备份
           </el-button>
         </template>
       </el-table-column>
@@ -86,7 +113,7 @@
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination'
 import { hostAdd, hostDelete, hostUpdate } from '@/api/host'
-import { GetServiceList } from "@/api/agent";
+import { GetServiceList } from '@/api/agent'
 
 const loadTypeOptions = [
   { key: '0', display_name: '离线' },
@@ -99,7 +126,7 @@ const loadTypeKeyValue = loadTypeOptions.reduce((acc, cur) => {
 }, {})
 
 export default {
-  name: 'serviceList',
+  name: 'ServiceList',
   components: { Pagination },
   directives: { waves },
   filters: {
@@ -251,11 +278,10 @@ export default {
       })
     },
     handleTaskdetail(row) {
-      this.$router.push('/cluster/list/' + row.name)
+      this.$router.push('/cluster/list/' + row.service_name)
     },
-    getSortClass: function(key) {
-      const sort = this.listQuery.sort
-      return sort === `+${key}` ? 'ascending' : 'descending'
+    handleAgentEsList(row) {
+      this.$router.push('/cluster/elastic/list/' + row.service_name)
     }
   }
 }
