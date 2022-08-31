@@ -11,9 +11,9 @@
         <el-option
           v-for="(item, index) in bakServiceList"
           :key="index"
-          :label="item.name"
-          :value="item.name">
-        </el-option>
+          :label="item.service_name"
+          :value="item.service_name"
+        />
       </el-select>
       <el-input
         v-model="listQuery.info"
@@ -81,7 +81,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" align="center" width="330" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" width="330" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             修改主机
@@ -128,8 +128,8 @@
 <script>
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination'
-import {CreateAgentHost, DeleteAgentHost, GetAgentHostList, UpdateAgentHost} from "@/api/agent-host";
-import {GetServiceList} from "@/api/agent";
+import { CreateAgentHost, DeleteAgentHost, GetAgentHostList, UpdateAgentHost } from '@/api/agent-host'
+import { GetServiceList } from '@/api/agent'
 
 const loadTypeOptions = [
   { key: '0', display_name: '离线' },
@@ -160,9 +160,9 @@ export default {
   },
   data() {
     return {
-      bakServiceValue: "",
+      bakServiceValue: '',
       bakServiceList: [],
-      service_name : '',
+      service_name: '',
       tableKey: 0,
       list: null,
       total: 0,
@@ -195,21 +195,21 @@ export default {
       }
     }
   },
-  created() {
-    this.getServiceList()
-  },
   watch: {
-    //监听bakService的值,若发生变化，则执行handler方法中的内容
+    // 监听bakService的值,若发生变化，则执行handler方法中的内容
     bakServiceValue: {
       handler() {
-        //将bakService的值存入本地，用于path切换时依旧能获取得到
+        // 将bakService的值存入本地，用于path切换时依旧能获取得到
         localStorage.setItem('bakService', this.bakServiceValue)
-        //重置当前页为1
+        // 重置当前页为1
         this.currentPage = 1
-        //获取deployment列表
+        // 获取deployment列表
         this.getList()
       }
-    },
+    }
+  },
+  created() {
+    this.getServiceList()
   },
   methods: {
     getList() {
@@ -228,7 +228,7 @@ export default {
       GetServiceList().then(res => {
         this.bakServiceList = res.data.agent_list
         // 默认请求服务第一个
-        this.bakServiceValue = this.bakServiceList[0].name
+        this.bakServiceValue = this.bakServiceList[0].service_name
         this.getList()
       })
         .catch(res => {

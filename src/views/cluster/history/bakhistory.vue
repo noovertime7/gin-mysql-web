@@ -10,9 +10,9 @@
         <el-option
           v-for="(item, index) in bakHistoryList"
           :key="index"
-          :label="item.name"
-          :value="item.name">
-        </el-option>
+          :label="item.service_name"
+          :value="item.service_name"
+        />
       </el-select>
 
       <el-input v-model="listQuery.info" placeholder="备份主机/数据库名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
@@ -25,9 +25,7 @@
       <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
         显示备份文件路径
       </el-checkbox>
-      <div>
-
-      </div>
+      <div />
     </div>
 
     <el-table
@@ -92,7 +90,7 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column align="center" class-name="small-padding fixed-width" label="操作" width="257">
+      <el-table-column align="center" class-name="small-padding fixed-width" label="操作" width="257" fixed="right">
         <template slot-scope="{row}">
           <el-button type="warning" size="mini" @click="deleteHistory(row)">
             删除
@@ -117,10 +115,8 @@
 <script>
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination'
-import { checkDownloadBakFile } from '@/api/public'
-import {GetServiceList} from "@/api/agent";
-import {DeleteHistory, GetAgentHistory} from "@/api/agent-history";
-import {StartAgentTask} from "@/api/agent-task";
+import { GetServiceList } from '@/api/agent'
+import { DeleteHistory, GetAgentHistory } from '@/api/agent-history'
 
 const loadTypeOptions = [
   { key: '0', display_name: '失败' },
@@ -151,14 +147,14 @@ export default {
   },
   data() {
     return {
-      bakHistoryValue: "",
+      bakHistoryValue: '',
       bakHistoryList: [],
       tableKey: 0,
       list: null,
       total: 0,
       listLoading: true,
       listQuery: {
-        service_name: "",
+        service_name: '',
         page_no: 1,
         page_size: 20,
         info: '',
@@ -172,21 +168,21 @@ export default {
       downloadLoading: false
     }
   },
-  beforeMount() {
-    this.getServiceList()
-  },
   watch: {
-    //监听bakHistory的值,若发生变化，则执行handler方法中的内容
+    // 监听bakHistory的值,若发生变化，则执行handler方法中的内容
     bakHistoryValue: {
       handler() {
-        //将bakHistory的值存入本地，用于path切换时依旧能获取得到
+        // 将bakHistory的值存入本地，用于path切换时依旧能获取得到
         localStorage.setItem('bakHistory', this.bakHistoryValue)
-        //重置当前页为1
+        // 重置当前页为1
         this.currentPage = 1
-        //获取deployment列表
+        // 获取deployment列表
         this.getList()
       }
-    },
+    }
+  },
+  beforeMount() {
+    this.getServiceList()
   },
   methods: {
     deleteHistory(row) {
@@ -216,12 +212,12 @@ export default {
         }, 0.1 * 1000)
       })
     },
-    //获取服务列表
+    // 获取服务列表
     getServiceList() {
       GetServiceList().then(res => {
-          this.bakHistoryList = res.data.agent_list
+        this.bakHistoryList = res.data.agent_list
         // 默认请求服务第一个
-        this.bakHistoryValue = this.bakHistoryList[0].name
+        this.bakHistoryValue = this.bakHistoryList[0].service_name
         this.getList()
       })
         .catch(res => {
@@ -303,8 +299,8 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['id', 'host', 'db_name', 'ding_status', 'oss_status', 'message', 'file_size', 'file_name', 'bak_time']
-        const filterVal = ['id', 'host', 'db_name', 'ding_status', 'oss_status', 'message', 'file_size', 'file_name', 'bak_time']
+        const tHeader = ['ID', 'Host', 'DBName', 'DingStatus', 'OSSStatus', 'Message', 'FileSize', 'FileName', 'BakTime']
+        const filterVal = ['ID', 'Host', 'DBName', 'DingStatus', 'OSSStatus', 'Message', 'FileSize', 'FileName', 'BakTime']
         const data = this.formatJson(filterVal)
         excel.export_json_to_excel({
           header: tHeader,

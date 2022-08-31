@@ -13,7 +13,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="Username"
+          placeholder="用户名"
           name="username"
           type="text"
           tabindex="1"
@@ -31,7 +31,7 @@
             ref="password"
             v-model="loginForm.password"
             :type="passwordType"
-            placeholder="Password"
+            placeholder="密码"
             name="password"
             tabindex="2"
             autocomplete="on"
@@ -45,7 +45,7 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
       <div style="position:relative" />
     </el-form>
@@ -204,13 +204,13 @@ $cursor: #fff;
       -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
-      color: $light_gray;
+      color: $bg;
       height: 47px;
       caret-color: $cursor;
 
       &:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px $bg inset !important;
-        -webkit-text-fill-color: $cursor !important;
+        box-shadow: 0 0 0px 1000px $light_gray inset !important;
+        -webkit-text-fill-color: $light_gray !important;
       }
     }
   }
@@ -232,16 +232,22 @@ $light_gray:#eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  background: url("../../assets/login_bg.png") no-repeat;
   overflow: hidden;
 
   .login-form {
-    position: relative;
-    width: 520px;
-    max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
-    overflow: hidden;
+    position: absolute;
+    top: 20%;
+    left: 22%;
+    -webkit-transform: translateX(-20%);
+    transform: translateX(-70%);
+    width: 400px;
+    height: var(--widthVar);
+    /*border: 1px solid #DCDFE6;*/
+    margin: 150px auto;
+    padding: 10px 20px 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px #DCDFE6;
   }
 
   .tips {
@@ -269,7 +275,7 @@ $light_gray:#eee;
 
     .title {
       font-size: 26px;
-      color: $light_gray;
+      color: $bg;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;

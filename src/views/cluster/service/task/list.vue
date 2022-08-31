@@ -12,8 +12,8 @@
           v-for="(item, index) in HostList"
           :key="index"
           :label="item.Host"
-          :value="item.Host">
-        </el-option>
+          :value="item.Host"
+        />
       </el-select>
       <el-input
         v-model="listQuery.info"
@@ -128,7 +128,7 @@
 <script>
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import {GetAgentHostList} from "@/api/agent-host";
+import { GetAgentHostList } from '@/api/agent-host'
 import {
   DeleteAgentTask,
   GetAgentTaskList,
@@ -136,7 +136,7 @@ import {
   StartAgentTask,
   StopAgentHostTask,
   StopAgentTask
-} from "@/api/agent-task";
+} from '@/api/agent-task'
 
 export default {
   name: 'TaskList',
@@ -148,7 +148,7 @@ export default {
       HostID: 0,
       HostValue: '',
       HostList: [],
-      service_name : '',
+      service_name: '',
       list: null,
       total: 0,
       listLoading: true,
@@ -167,25 +167,25 @@ export default {
     }
   },
   watch: {
-    //监听Host的值,若发生变化，则执行handler方法中的内容
+    // 监听Host的值,若发生变化，则执行handler方法中的内容
     HostValue: {
       handler() {
-        //将Host的值存入本地，用于path切换时依旧能获取得到
+        // 将Host的值存入本地，用于path切换时依旧能获取得到
         localStorage.setItem('Host', this.HostValue)
-        //重置当前页为1
+        // 重置当前页为1
         this.currentPage = 1
-        //获取deployment列表
+        // 获取deployment列表
         this.getList()
       }
-    },
+    }
   },
   created() {
-    this.service_name= this.$route.params && this.$route.params.servicename
-      this.getHostList()
+    this.service_name = this.$route.params && this.$route.params.servicename
+    this.getHostList()
   },
   methods: {
     getvalue(inhost) {
-      for (let i=0;i<this.TestMap.length;i++) {
+      for (let i = 0; i < this.TestMap.length; i++) {
         if (this.TestMap[i].Host === inhost) {
           return this.TestMap[i].id
         }
@@ -210,14 +210,14 @@ export default {
 
       GetAgentHostList(this.listQuery).then(res => {
         // 判断当前服务是否拥有主机信息
-        if (res.data.Total <1 || res.data.Total === undefined ) {
+        if (res.data.Total < 1 || res.data.Total === undefined) {
           this.$notify({
             title: 'Success',
             message: '当前服务备份主机为空,请先添加备份主机',
             type: 'success',
             duration: 1000
           })
-          this.$router.push("/cluster/host")
+          this.$router.push('/cluster/host')
           return
         }
         this.HostList = res.data.listItem
@@ -225,10 +225,10 @@ export default {
         this.HostValue = this.HostList[0].Host
         this.HostID = this.HostList[0].ID
 
-        this.TestMap= this.HostList.map(item => ({
-            id: item.ID,
-            Host: item.Host
-          }))
+        this.TestMap = this.HostList.map(item => ({
+          id: item.ID,
+          Host: item.Host
+        }))
         // for (let i=0;i<this.TestMap.length;i++) {
         //   if (this.TestMap[i].Host === '127.0.0.1:3307') {
         //     return this.TestMap[i].id
@@ -282,10 +282,10 @@ export default {
       this.getList()
     },
     handleEdit(row, index) {
-      this.$router.push('/cluster/task_edit/' + this.getvalue(this.HostValue)  +'/'+ row.ID + '/'+ this.service_name + '/edit')
+      this.$router.push('/cluster/task_edit/' + this.getvalue(this.HostValue) + '/' + row.ID + '/' + this.service_name + '/edit')
     },
     handleAddTask() {
-      this.$router.push('/cluster/task_add/' + this.getvalue(this.HostValue)  +'/'+ this.service_name + '/add')
+      this.$router.push('/cluster/task_add/' + this.getvalue(this.HostValue) + '/' + this.service_name + '/add')
     },
     handleDelete(row, index) {
       this.$confirm('此操作将删除该任务, 是否继续?', '提示', {

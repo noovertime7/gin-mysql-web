@@ -175,6 +175,27 @@ export const constantRoutes = [
         hidden: true
       },
       {
+        path: 'elastic/list/:servicename',
+        component: () => import('@/views/cluster/service/elastic/es_task_list'),
+        name: 'ElasticSearch任务列表',
+        meta: { title: 'ElasticSearch任务列表',  noCache: true },
+        hidden: true
+      },
+      {
+        path: 'es_task_add/:servicename/:action',
+        component: () => import('@/views/cluster/service/elastic/es_task'),
+        name: '新增ES任务',
+        meta: { title: '新增ES任务', icon: 'component', affix: false },
+        hidden: true
+      },
+      {
+        path: 'es_task_edit/:id(\\d+)/:servicename/:action',
+        component: () => import('@/views/cluster/service/elastic/es_task'),
+        name: '编辑ES任务',
+        meta: { title: '编辑ES任务', icon: 'component', affix: false },
+        hidden: true
+      },
+      {
         path: 'host',
         component: () => import('@/views/cluster/host/serviceHost'),
         name: '主机管理',
@@ -185,6 +206,12 @@ export const constantRoutes = [
         component: () => import('@/views/cluster/history/bakhistory'),
         name: '备份历史',
         meta: { title: '备份历史', noCache: true }
+      },
+      {
+        path: 'snapshot',
+        component: () => import('@/views/cluster/service/elastic/es_history'),
+        name: '快照历史',
+        meta: { title: '快照历史', noCache: true }
       },
       {
         path: 'task_add/:hostid(\\d+)/:servicename/:action',
@@ -202,10 +229,10 @@ export const constantRoutes = [
       },
     ]
   },
-  // {
-  //   path: '/:pathMatch(.*)',
-  //   redirect: '404'
-  // },
+  {
+    path: '/:pathMatch(.*)',
+    redirect: '404'
+  },
 ]
 
 /**

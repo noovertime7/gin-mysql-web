@@ -73,7 +73,7 @@ service.interceptors.response.use(
   error => {
     console.log('err' + error) // for debug
     Message({
-      message: error.errmsg,
+      message: '服务不可用，请检查后端服务' + error,
       type: 'error',
       duration: 5 * 1000
     })

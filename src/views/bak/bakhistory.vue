@@ -75,7 +75,7 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column align="center" class-name="small-padding fixed-width" label="操作" width="257">
+      <el-table-column align="center" class-name="small-padding fixed-width" label="操作" fixed="right" width="257">
         <template slot-scope="{row}">
           <el-button type="primary" size="mini" @click="handleBakfileDownload(row)">
             下载
